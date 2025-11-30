@@ -1,8 +1,7 @@
 # Search Algorithms - Robotic Engine Assembly
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.0-green.svg?style=for-the-badge)
+![Java](https://img.shields.io/badge/Java-ED8B00?logo=openjdk&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 A Java implementation demonstrating exhaustive and heuristic search algorithms in the context of robotic positioning for engine assembly. This project showcases fundamental AI search strategies with a practical application scenario.
 
@@ -74,16 +73,6 @@ Problem Configuration:
 ```
 
 Select an option to see the algorithm in action with detailed step-by-step output and final statistics.
-
-## 🏗️ Architecture
-
-The project follows SOLID principles with clear separation of concerns:
-
-- **SearchAlgorithms**: Main entry point, user interface, and configuration constants
-- **SearchAlgorithm**: Abstract base class (Open/Closed Principle)
-- **ExhaustiveSearch**: Concrete implementation of bidirectional search
-- **HeuristicSearch**: Concrete implementation of gradient-based search
-- **SearchStatistics**: Statistics tracking and reporting
 
 ## 🔧 Configuration
 

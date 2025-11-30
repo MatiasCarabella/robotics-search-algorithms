@@ -190,7 +190,25 @@ class ExhaustiveSearch extends SearchAlgorithm {
         System.out.println("  position without information about the target location.\n");
         System.out.println("  Pattern: B -> B+d -> B-2d -> B+3d -> B-4d -> ...\n");
         System.out.println("Starting search...\n");
-        System.out.println("-".repeat(60));
+        System.out.println("=".repeat(60));
+        printSearchSpace();
+        System.out.println("=".repeat(60));
+    }
+    
+    private void printSearchSpace() {
+        int width = 60;
+        double range = SearchAlgorithms.getMaxRange() - SearchAlgorithms.getMinRange();
+        int startPos = (int)((SearchAlgorithms.getInitialPosition() - SearchAlgorithms.getMinRange()) / range * width);
+        int targetPos = (int)((SearchAlgorithms.getTargetPosition() - SearchAlgorithms.getMinRange()) / range * width);
+        
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < width; i++) {
+            if (i == startPos) line.append("S");
+            else if (i == targetPos) line.append("T");
+            else line.append(".");
+        }
+        System.out.println(line);
+        System.out.println("S=Start(" + SearchAlgorithms.getInitialPosition() + ") T=Target(" + SearchAlgorithms.getTargetPosition() + ")");
     }
     
     @Override
@@ -226,8 +244,27 @@ class ExhaustiveSearch extends SearchAlgorithm {
     private double moveToPosition(double current, double target, double previous, String direction) {
         stats.addDistance(Math.abs(target - previous));
         stats.incrementSteps();
-        System.out.printf("Step %3d: Position %6.1f (%s)%n", stats.getSteps(), target, direction);
+        
+        // Visual progress bar
+        String progressBar = createProgressBar(target);
+        System.out.printf("Step %3d: Position %6.1f (%s) %s%n", 
+                         stats.getSteps(), target, direction, progressBar);
         return target;
+    }
+    
+    private String createProgressBar(double position) {
+        int width = 20;
+        double range = SearchAlgorithms.getMaxRange() - SearchAlgorithms.getMinRange();
+        int pos = (int)((position - SearchAlgorithms.getMinRange()) / range * width);
+        pos = Math.max(0, Math.min(width - 1, pos));
+        
+        StringBuilder bar = new StringBuilder("[");
+        for (int i = 0; i < width; i++) {
+            if (i == pos) bar.append("█");
+            else bar.append("·");
+        }
+        bar.append("]");
+        return bar.toString();
     }
     
     private void finalizeSearch(double position) {
@@ -257,7 +294,25 @@ class HeuristicSearch extends SearchAlgorithm {
         System.out.println("  Moves towards where the relief is greater.\n");
         System.out.println("  Heuristic function: h(n) = relief at position n\n");
         System.out.println("Starting search...\n");
-        System.out.println("-".repeat(60));
+        System.out.println("=".repeat(60));
+        printSearchSpace();
+        System.out.println("=".repeat(60));
+    }
+    
+    private void printSearchSpace() {
+        int width = 60;
+        double range = SearchAlgorithms.getMaxRange() - SearchAlgorithms.getMinRange();
+        int startPos = (int)((SearchAlgorithms.getInitialPosition() - SearchAlgorithms.getMinRange()) / range * width);
+        int targetPos = (int)((SearchAlgorithms.getTargetPosition() - SearchAlgorithms.getMinRange()) / range * width);
+        
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < width; i++) {
+            if (i == startPos) line.append("S");
+            else if (i == targetPos) line.append("T");
+            else line.append(".");
+        }
+        System.out.println(line);
+        System.out.println("S=Start(" + SearchAlgorithms.getInitialPosition() + ") T=Target(" + SearchAlgorithms.getTargetPosition() + ")");
     }
     
     @Override
@@ -295,8 +350,13 @@ class HeuristicSearch extends SearchAlgorithm {
             
             relief = calculateRelief(currentPosition);
             stats.incrementSteps();
-            System.out.printf("Step %3d: Pos %6.1f | Relief %5.2f (%s)%n", 
-                             stats.getSteps(), currentPosition, relief, decision.direction);
+            
+            // Visual progress bar and relief indicator
+            String progressBar = createProgressBar(currentPosition);
+            String reliefBar = createReliefBar(relief);
+            System.out.printf("Step %3d: Pos %6.1f | Relief %5.2f %s (%s) %s%n", 
+                             stats.getSteps(), currentPosition, relief, reliefBar, 
+                             decision.direction, progressBar);
         }
         
         finalizeSearch(currentPosition);
@@ -325,6 +385,35 @@ class HeuristicSearch extends SearchAlgorithm {
         double distanceToCenter = Math.abs(position - SearchAlgorithms.getTargetPosition());
         double relief = SearchAlgorithms.getRingRadius() - distanceToCenter;
         return Math.max(0.0, relief);
+    }
+    
+    private String createProgressBar(double position) {
+        int width = 20;
+        double range = SearchAlgorithms.getMaxRange() - SearchAlgorithms.getMinRange();
+        int pos = (int)((position - SearchAlgorithms.getMinRange()) / range * width);
+        pos = Math.max(0, Math.min(width - 1, pos));
+        
+        StringBuilder bar = new StringBuilder("[");
+        for (int i = 0; i < width; i++) {
+            if (i == pos) bar.append("█");
+            else bar.append("·");
+        }
+        bar.append("]");
+        return bar.toString();
+    }
+    
+    private String createReliefBar(double relief) {
+        int maxBars = 10;
+        int bars = (int)((relief / SearchAlgorithms.getRingRadius()) * maxBars);
+        bars = Math.max(0, Math.min(maxBars, bars));
+        
+        StringBuilder bar = new StringBuilder("[");
+        for (int i = 0; i < maxBars; i++) {
+            if (i < bars) bar.append("▓");
+            else bar.append("░");
+        }
+        bar.append("]");
+        return bar.toString();
     }
     
     private void finalizeSearch(double position) {
