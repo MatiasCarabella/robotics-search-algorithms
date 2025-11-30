@@ -95,15 +95,6 @@ Final position:          450.0
 -----------------------------------------------------------
 ```
 
-## ✨ Features
-
-- Two distinct search algorithm implementations
-- Real-time step-by-step visualization
-- Performance statistics tracking (steps, distance, execution time)
-- Interactive console menu
-- Configurable search parameters
-- Clean separation of concerns with dedicated classes
-
 ## 📊 Algorithm Comparison
 
 | Algorithm | Strategy | Pros | Cons |
