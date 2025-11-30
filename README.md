@@ -20,7 +20,7 @@ The implementation follows SOLID principles and clean code practices, making it 
 
 ## 📺 Example Output
 
-**Exhaustive Search:**
+### Exhaustive Search
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║           EXHAUSTIVE SEARCH (BIDIRECTIONAL)               ║
@@ -57,7 +57,7 @@ Final position:          450.0
 -----------------------------------------------------------
 ```
 
-**Heuristic Search:**
+### Heuristic Search
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║        HEURISTIC SEARCH (RELIEF GRADIENT)                 ║
