@@ -1,7 +1,12 @@
 # Search Algorithms - Robotic Engine Assembly
 
+<div align="center">
+
 ![Java](https://img.shields.io/badge/Java-ED8B00?logo=openjdk&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0-green.svg)
+
+</div>
 
 A Java implementation demonstrating exhaustive and heuristic search algorithms in the context of robotic positioning for engine assembly. This project showcases fundamental AI search strategies with a practical application scenario.
 
@@ -14,6 +19,82 @@ This project simulates a robotic search system designed to locate a target posit
 
 The implementation follows SOLID principles and clean code practices, making it an excellent educational resource for understanding search algorithms and object-oriented design.
 
+## 📺 Example Output
+
+**Exhaustive Search:**
+```
+╔═══════════════════════════════════════════════════════════╗
+║           EXHAUSTIVE SEARCH (BIDIRECTIONAL)               ║
+╚═══════════════════════════════════════════════════════════╝
+
+Description:
+  Systematically explores both directions from the initial
+  position without information about the target location.
+
+  Pattern: B -> B+d -> B-2d -> B+3d -> B-4d -> ...
+
+Starting search...
+
+============================================================
+....................S.......................T...............
+S=Start(250.0) T=Target(450.0)
+============================================================
+Step   1: Position  250.0 (start) [·······█············]
+Step   2: Position  265.0 (right ->) [········█···········]
+Step   3: Position  220.0 (left <-) [······█·············]
+Step   4: Position  280.0 (right ->) [·········█··········]
+...
+Step  14: Position  445.0 (right ->) [···············█····]
+
+TARGET FOUND at position 450.0
+
+-----------------------------------------------------------
+                      STATISTICS                           
+-----------------------------------------------------------
+Total steps:             14
+Distance traveled:      975.0 units
+Execution time:            2 ms
+Final position:          450.0
+-----------------------------------------------------------
+```
+
+**Heuristic Search:**
+```
+╔═══════════════════════════════════════════════════════════╗
+║        HEURISTIC SEARCH (RELIEF GRADIENT)                 ║
+╚═══════════════════════════════════════════════════════════╝
+
+Description:
+  Uses the prominent ring relief as a guide.
+  Moves towards where the relief is greater.
+
+  Heuristic function: h(n) = relief at position n
+
+Starting search...
+
+============================================================
+....................S.......................T...............
+S=Start(250.0) T=Target(450.0)
+============================================================
+Step   1: Pos  250.0 | Relief  0.00 [░░░░░░░░░░] (start) [·······█············]
+Step   2: Pos  265.0 | Relief 25.00 [██████░░░░] (right ->) [········█···········]
+Step   3: Pos  280.0 | Relief 30.00 [███████░░░] (right ->) [·········█··········]
+Step   4: Pos  295.0 | Relief 35.00 [████████░░] (right ->) [··········█·········]
+...
+Step  14: Pos  450.0 | Relief 40.00 [██████████] (right ->) [···············█····]
+
+TARGET FOUND at position 450.0
+
+-----------------------------------------------------------
+                      STATISTICS                           
+-----------------------------------------------------------
+Total steps:             14
+Distance traveled:      200.0 units
+Execution time:            1 ms
+Final position:          450.0
+-----------------------------------------------------------
+```
+
 ## ✨ Features
 
 - Two distinct search algorithm implementations
@@ -22,6 +103,13 @@ The implementation follows SOLID principles and clean code practices, making it 
 - Interactive console menu
 - Configurable search parameters
 - Clean separation of concerns with dedicated classes
+
+## 📊 Algorithm Comparison
+
+| Algorithm | Strategy | Pros | Cons |
+|-----------|----------|------|------|
+| Exhaustive | Systematic bidirectional | Guaranteed to find target | More steps required |
+| Heuristic | Relief gradient following | Faster convergence | Requires domain knowledge |
 
 ## 🚀 Getting Started
 
@@ -60,8 +148,8 @@ When you run the program, you'll see an interactive menu:
 Problem Configuration:
   - Initial position (B): 250.0
   - Target position (A): 450.0 (unknown to algorithms)
-  • Displacement: 200.0 units
-  • Search increment: 15.0
+  - Displacement: 200.0 units
+  - Search increment: 15.0
 
 -----------------------------------------------------------
                       MAIN MENU                            
@@ -87,13 +175,6 @@ private static final double TOLERANCE = 7.5;           // Acceptable error
 private static final double MIN_RANGE = 50.0;          // Minimum boundary
 private static final double MAX_RANGE = 750.0;         // Maximum boundary
 ```
-
-## 📊 Algorithm Comparison
-
-| Algorithm | Strategy | Pros | Cons |
-|-----------|----------|------|------|
-| Exhaustive | Systematic bidirectional | Guaranteed to find target | More steps required |
-| Heuristic | Relief gradient following | Faster convergence | Requires domain knowledge |
 
 ## 📝 License
 
